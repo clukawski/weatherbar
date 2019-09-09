@@ -24,5 +24,5 @@ func main() {
 	}
 
 	// Display weather data
-	fmt.Println(wr.String())
+	fmt.Print(wr.String())
 }
