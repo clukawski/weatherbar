@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	ApiURL                = "https://api.openweathermap.org/data/2.5/weather?q=Toronto,CA&APPID=%s"
+	ApiURL                = "https://api.openweathermap.org/data/2.5/weather?q=%s,%s&APPID=%s"
 	HumidexFormat         = "Outside: %s, %.1fC, feels like %.1fC"
 	WindchillFormat       = "Outside: %s, %.1fC, feels like %.1fC"
 	DefaultFormat         = "Outside: %s, %.1fC"
@@ -59,9 +59,11 @@ type WeatherResponse struct {
 	Cod      int    `json:"cod"`
 }
 
-func GetWeather(apiKey string) (*WeatherResponse, error) {
+func GetWeather(apiKey, city, countryCode string) (*WeatherResponse, error) {
 	wr := new(WeatherResponse)
-	resp, err := http.Get(fmt.Sprintf(ApiURL, apiKey))
+
+	url := fmt.Sprintf(ApiURL, city, countryCode, apiKey)
+	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
 	}
