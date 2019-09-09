@@ -1,6 +1,8 @@
 ## weatherbar
 
-Basic text weather info using openweather
+Basic text info using openweather displaying air temp and weather conditions.
+
+Displays humidex and windchill information when relevant.
 
 Usage:
 
