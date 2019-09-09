@@ -100,16 +100,15 @@ func Windchill(temp, speed float64) float64 {
 }
 
 func (wr *WeatherResponse) String() string {
-	wr.Main.Humidity = 83
-	wr.Main.Temp = 300
 	tempCelcius := Celcius(wr.Main.Temp)
 	dewPointCelcius := Dewpoint(tempCelcius, float64(wr.Main.Humidity))
 	dewPoint := dewPointCelcius + 273.15
-	e := (5 / 9) * (6.11 * math.Exp(5417.7530*((1/273.15)-(1/dewPoint))))
-	humidex := wr.Main.Temp + (e - 10)
-	windChill := Windchill(tempCelcius, wr.Wind.Speed)
 
-	fmt.Println(dewPointCelcius, tempCelcius, Celcius(humidex), wr.Main.Humidity)
+	// Remember 5/9 is zero because 5 and 9 are integer types (do 5.0/9.0 instead)
+	e := 6.11 * math.Exp(5417.7530*((1/273.15)-(1/dewPoint)))
+	h := (5.0 / 9.0) * (e - 10)
+	humidex := wr.Main.Temp + h
+	windChill := Windchill(tempCelcius, wr.Wind.Speed)
 
 	var output string
 	switch true {
